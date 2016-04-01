@@ -151,3 +151,10 @@ To retrieve all the cars that match a given term:
 ```php
 $audis = Car::getAllByTermId($term_audi->id)->get();
 ```
+
+Add these line to your routes.php to manage your terms
+
+```php
+Route::controller('taxonomy', '\Trexology\Taxonomy\Controllers\TaxonomyController');
+Route::controller('terms', '\Trexology\Taxonomy\Controllers\TermsController');
+```
