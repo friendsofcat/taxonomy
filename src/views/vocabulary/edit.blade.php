@@ -8,7 +8,7 @@
 
   <div class="row">
 
-    {!! Form::model($vocabulary, array('method' => 'PUT', 'url' => action('\Devfactory\Taxonomy\Controllers\TaxonomyController@putUpdate', $vocabulary->id), 'id' => 'app-create', 'class' => 'form')) !!}
+    {!! Form::model($vocabulary, array('method' => 'PUT', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@putUpdate', $vocabulary->id), 'id' => 'app-create', 'class' => 'form')) !!}
 
     <div class="col-md-6">
 

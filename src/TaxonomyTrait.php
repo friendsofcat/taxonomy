@@ -1,7 +1,7 @@
-<?php namespace Devfactory\Taxonomy;
+<?php namespace Trexology\Taxonomy;
 
-use Devfactory\Taxonomy\Models\TermRelation;
-use Devfactory\Taxonomy\Models\Term;
+use Trexology\Taxonomy\Models\TermRelation;
+use Trexology\Taxonomy\Models\Term;
 
 trait TaxonomyTrait {
 
@@ -11,7 +11,7 @@ trait TaxonomyTrait {
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
 	public function related() {
-		return $this->morphMany('Devfactory\Taxonomy\Models\TermRelation', 'relationable');
+		return $this->morphMany('Trexology\Taxonomy\Models\TermRelation', 'relationable');
 	}
 
   /**

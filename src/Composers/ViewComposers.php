@@ -1,4 +1,4 @@
-<?php namespace Devfactory\Taxonomy\Composers;
+<?php namespace Trexology\Taxonomy\Composers;
 
 use Config;
 

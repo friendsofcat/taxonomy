@@ -1,7 +1,7 @@
-<?php namespace Devfactory\Taxonomy;
+<?php namespace Trexology\Taxonomy;
 
-use Devfactory\Taxonomy\Models\Vocabulary;
-use Devfactory\Taxonomy\Models\Term;
+use Trexology\Taxonomy\Models\Vocabulary;
+use Trexology\Taxonomy\Models\Term;
 
 class Taxonomy {
 

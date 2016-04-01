@@ -1,4 +1,4 @@
-<?php namespace Devfactory\Taxonomy\Models;
+<?php namespace Trexology\Taxonomy\Models;
 
 class Vocabulary extends \Eloquent {
 
@@ -13,11 +13,11 @@ class Vocabulary extends \Eloquent {
   ];
 
   public function terms() {
-    return $this->HasMany('Devfactory\Taxonomy\Models\Term');
+    return $this->HasMany('Trexology\Taxonomy\Models\Term');
   }
 
   public function relations() {
-    return $this->HasMany('Devfactory\Taxonomy\Models\TermRelation');
+    return $this->HasMany('Trexology\Taxonomy\Models\TermRelation');
   }
 
 }

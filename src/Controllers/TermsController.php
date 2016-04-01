@@ -1,4 +1,4 @@
-<?php namespace Devfactory\Taxonomy\Controllers;
+<?php namespace Trexology\Taxonomy\Controllers;
 
 use Config;
 use Input;
@@ -11,8 +11,8 @@ use Validator;
 use View;
 use Helpers;
 
-use Devfactory\Taxonomy\Models\Vocabulary;
-use Devfactory\Taxonomy\Models\Term;
+use Trexology\Taxonomy\Models\Vocabulary;
+use Trexology\Taxonomy\Models\Term;
 
 
 use Illuminate\Foundation\Bus\DispatchesCommands;
@@ -68,7 +68,7 @@ class TermsController extends BaseController {
 
     $term = \Taxonomy::createTerm($vocabulary->id, Input::get('name'));
 
-    return Redirect::to(action('\Devfactory\Taxonomy\Controllers\TermsController@getIndex', ['id' => $vocabulary->id]))->with('success', 'Created');
+    return Redirect::to(action('\Trexology\Taxonomy\Controllers\TermsController@getIndex', ['id' => $vocabulary->id]))->with('success', 'Created');
   }
 
   /**
@@ -129,7 +129,7 @@ class TermsController extends BaseController {
     $term->name = Input::get('name');
     $term->save();
 
-    return Redirect::to(action('\Devfactory\Taxonomy\Controllers\TermsController@getIndex', ['id' => $term->vocabulary_id]))->with('success', 'Updated');
+    return Redirect::to(action('\Trexology\Taxonomy\Controllers\TermsController@getIndex', ['id' => $term->vocabulary_id]))->with('success', 'Updated');
   }
 
   /**

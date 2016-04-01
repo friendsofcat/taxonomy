@@ -8,7 +8,7 @@
 
   <div class="row">
     <div class="col-sm-12">
-        {!! Form::open(array('method'=>'GET', 'url' => action('\Devfactory\Taxonomy\Controllers\TaxonomyController@getCreate'))) !!}
+        {!! Form::open(array('method'=>'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@getCreate'))) !!}
         {!! Form::submit(trans('general.buttons.add'), array('class' => 'btn btn-primary btn-flat margin-bottom')) !!}
         {!! Form::close() !!}
    </div>
@@ -47,7 +47,7 @@
               @foreach ($vocabularies as $vocabulary)
                 <tr>
                   <td>
-                    <a href="{!! action('\Devfactory\Taxonomy\Controllers\TermsController@getIndex', ['id' => $vocabulary->id]) !!}">
+                    <a href="{!! action('\Trexology\Taxonomy\Controllers\TermsController@getIndex', ['id' => $vocabulary->id]) !!}">
                       {!! $vocabulary->name !!}
                     </a>
                   </td>
@@ -55,12 +55,12 @@
 
                     <div class="btn-group">
                     <div class="btn-group">
-                          {!! Form::open(array('method'=>'GET', 'url' => action('\Devfactory\Taxonomy\Controllers\TaxonomyController@getEdit', $vocabulary->id))) !!}
+                          {!! Form::open(array('method'=>'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@getEdit', $vocabulary->id))) !!}
                           {!! Form::submit(trans('general.buttons.edit'), array('class' => 'btn btn-xs btn-primary btn-flat')) !!}
                           {!! Form::close() !!}
                       </div>
                       <div class="btn-group">
-                          {!! Form::open(array('method'=>'DELETE', 'url' => action('\Devfactory\Taxonomy\Controllers\TaxonomyController@deleteDestroy', $vocabulary->id))) !!}
+                          {!! Form::open(array('method'=>'DELETE', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@deleteDestroy', $vocabulary->id))) !!}
                           {!! Form::submit(trans('general.buttons.delete'), array('class' => 'delete-confirm-dialog btn btn-xs btn-danger btn-flat')) !!}
                           {!! Form::close() !!}
                       </div>

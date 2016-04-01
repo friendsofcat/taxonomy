@@ -62,12 +62,12 @@
 
           <div class="box-header">
               <div class="btn-group">
-                  {!! Form::open(array('method' => 'GET', 'url' => action('\Devfactory\Taxonomy\Controllers\TaxonomyController@getIndex'))) !!}
+                  {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@getIndex'))) !!}
                   {!! Form::button(Lang::get('taxonomy::vocabulary.edit.button.back'), array('class'=>'btn btn-primary btn-flat', 'type' => 'submit')) !!}
                   {!! Form::close() !!}
               </div>
               <div class="btn-group">
-                  {!! Form::open(array('method' => 'GET', 'url' => action('\Devfactory\Taxonomy\Controllers\TermsController@getCreate', $vocabulary->id))) !!}
+                  {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@getCreate', $vocabulary->id))) !!}
                   {!! Form::button(Lang::get('taxonomy::vocabulary.edit.button.add_term'), array('class'=>'btn btn-success btn-flat', 'type' => 'submit')) !!}
                   {!! Form::close() !!}
               </div>
@@ -97,13 +97,13 @@
                     <!-- General tools such as edit or delete-->
                     <div class="pull-right">
                       <div class="btn-group">
-                        {!! Form::open(array('method' => 'GET', 'url' => action('\Devfactory\Taxonomy\Controllers\TermsController@getEdit', $parent['term']->id))) !!}
+                        {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@getEdit', $parent['term']->id))) !!}
                         {!! Form::button(Lang::get('taxonomy::vocabulary.button.edit'), array('class'=>'btn btn-xs btn-primary btn-flat', 'type' => 'submit')) !!}
                         {!! Form::close() !!}
                       </div>
 
                       <div class="btn-group">
-                        {!! Form::open(array('method' => 'DELETE', 'url' => action('\Devfactory\Taxonomy\Controllers\TermsController@deleteDestroy', $parent['term']->id))) !!}
+                        {!! Form::open(array('method' => 'DELETE', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@deleteDestroy', $parent['term']->id))) !!}
                         {!! Form::button(Lang::get('taxonomy::vocabulary.button.delete'), array('class'=>'delete-confirm-dialog btn btn-xs btn-danger btn-flat', 'type' => 'submit')) !!}
                         {!! Form::close() !!}
                       </div>
@@ -125,13 +125,13 @@
                           <!-- General tools such as edit or delete-->
                           <div class="pull-right">
                             <div class="btn-group">
-                              {!! Form::open(array('method' => 'GET', 'url' => action('\Devfactory\Taxonomy\Controllers\TermsController@getEdit', $child->id))) !!}
+                              {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@getEdit', $child->id))) !!}
                               {!! Form::button(Lang::get('taxonomy::vocabulary.button.edit'), array('class'=>'btn btn-xs btn-primary btn-flat', 'type' => 'submit')) !!}
                               {!! Form::close() !!}
                             </div>
 
                             <div class="btn-group">
-                              {!! Form::open(array('method' => 'DELETE', 'url' => action('\Devfactory\Taxonomy\Controllers\TermsController@deleteDestroy', $child->id))) !!}
+                              {!! Form::open(array('method' => 'DELETE', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@deleteDestroy', $child->id))) !!}
                               {!! Form::button(Lang::get('taxonomy::vocabulary.button.delete'), array('class'=>'delete-confirm-dialog btn btn-xs btn-danger btn-flat', 'type' => 'submit')) !!}
                               {!! Form::close() !!}
                             </div>
@@ -168,7 +168,7 @@
      $('.dd').on('change', function() {
        var json = JSON.stringify($(this).nestable('serialize'));
        $.ajax({
-         url: '{!! action('\Devfactory\Taxonomy\Controllers\TaxonomyController@postOrderTerms', $vocabulary->id) !!}',
+         url: '{!! action('\Trexology\Taxonomy\Controllers\TaxonomyController@postOrderTerms', $vocabulary->id) !!}',
          type: 'post',
          data: {
            json

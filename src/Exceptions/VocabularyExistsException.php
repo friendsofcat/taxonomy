@@ -1,3 +1,3 @@
-<?php namespace Devfactory\Taxonomy\Exceptions;
+<?php namespace Trexology\Taxonomy\Exceptions;
 
 class VocabularyExistsException extends \UnexpectedValueException {}

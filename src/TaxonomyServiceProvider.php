@@ -1,8 +1,8 @@
-<?php namespace Devfactory\Taxonomy;
+<?php namespace Trexology\Taxonomy;
 
 use Illuminate\Support\ServiceProvider;
-use Devfactory\Taxonomy\Models\Vocabulary;
-use Devfactory\Taxonomy\Models\Term;
+use Trexology\Taxonomy\Models\Vocabulary;
+use Trexology\Taxonomy\Models\Term;
 
 class TaxonomyServiceProvider extends ServiceProvider {
 

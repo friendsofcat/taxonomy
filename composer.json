@@ -1,12 +1,12 @@
 {
-  "name": "devfactory/taxonomy",
+  "name": "trexology/taxonomy",
   "description": "Create and manage a heirarchical taxonomy of terms within different vocabularies",
   "license": "MIT",
-  "keywords": ["taxonomy"],
+  "keywords": ["taxonomy","laravel"],
   "authors": [
     {
-      "name": "Mark Cameron",
-      "email": "mark.cameron@devfactory.ch"
+      "name": "Trex Lim",
+      "email": "trexlim@gmail.com"
     }
   ],
   "require": {
@@ -19,7 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Devfactory\\Taxonomy\\": "src/"
+      "Trexology\\Taxonomy\\": "src/"
     }
   },
   "extra": {

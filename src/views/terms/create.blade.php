@@ -8,7 +8,7 @@
 
   <div class="row">
 
-    {!! Form::open(array('method' => 'POST',  'url' => action('\Devfactory\Taxonomy\Controllers\TermsController@postStore'), 'id' => 'app-update', 'class' => 'form')) !!}
+    {!! Form::open(array('method' => 'POST',  'url' => action('\Trexology\Taxonomy\Controllers\TermsController@postStore'), 'id' => 'app-update', 'class' => 'form')) !!}
 
     <div class="col-md-6">
 

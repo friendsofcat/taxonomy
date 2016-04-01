@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/DevFactoryCH/taxonomy.svg?branch=master)](https://travis-ci.org/DevFactoryCH/taxonomy)
-[![Latest Stable Version](https://poser.pugx.org/devfactory/taxonomy/v/stable.svg)](https://packagist.org/packages/devfactory/taxonomy)
-[![Total Downloads](https://poser.pugx.org/devfactory/taxonomy/downloads.svg)](https://packagist.org/packages/devfactory/taxonomy)
-[![License](https://poser.pugx.org/devfactory/taxonomy/license.svg)](https://packagist.org/packages/devfactory/taxonomy)
+[![Latest Stable Version](https://poser.pugx.org/trexology/taxonomy/v/stable.svg)](https://packagist.org/packages/trexology/taxonomy)
+[![Total Downloads](https://poser.pugx.org/trexology/taxonomy/downloads.svg)](https://packagist.org/packages/trexology/taxonomy)
+[![License](https://poser.pugx.org/trexology/taxonomy/license.svg)](https://packagist.org/packages/trexology/taxonomy)
 
 #Taxonomy
 
@@ -14,7 +14,7 @@ This package allows you to create vocabularies with terms in Laravel 4 and 5
 In your `composer.json` add:
 
 	"require": {
-		"devfactory/taxonomy": "3.0.*"
+		"trexology/taxonomy": "3.0.*"
 	}
 
 From the terminal run
@@ -24,9 +24,9 @@ From the terminal run
 Then register the service provider and Facade by opening `app/config/app.php`
 
 ```php
-'Devfactory\Taxonomy\TaxonomyServiceProvider',
+'Trexology\Taxonomy\TaxonomyServiceProvider',
 
-'Taxonomy'        => 'Devfactory\Taxonomy\Facades\TaxonomyFacade',
+'Taxonomy'        => 'Trexology\Taxonomy\Facades\TaxonomyFacade',
 ```
 
 Then run the following artisant command to publish the config and migrations:
@@ -43,7 +43,7 @@ And finally in any of the Models where you want to use the Taxonomy functionalit
 <?php
 
 class Car extends \Eloquent {
-  use \Devfactory\Taxonomy\TaxonomyTrait;
+  use \Trexology\Taxonomy\TaxonomyTrait;
 }
 ```
 
@@ -52,7 +52,7 @@ class Car extends \Eloquent {
 In your `composer.json` add:
 
 	"require": {
-		"devfactory/taxonomy": "2.0.*"
+		"trexology/taxonomy": "2.0.*"
 	}
 
 From the terminal run
@@ -62,18 +62,18 @@ From the terminal run
 Then register the service provider and Facade by opening `app/config/app.php`
 
 ```php
-'Devfactory\Taxonomy\TaxonomyServiceProvider',
+'Trexology\Taxonomy\TaxonomyServiceProvider',
 
-'Taxonomy'        => 'Devfactory\Taxonomy\Facades\TaxonomyFacade',
+'Taxonomy'        => 'Trexology\Taxonomy\Facades\TaxonomyFacade',
 ```
 
 If you want you can publish the config files if you want to change them
 
-    php artisan config:publish devfactory/taxonomy
+    php artisan config:publish trexology/taxonomy
 
 Perform the DB migrations to install the required tables
 
-    php artisan migrate --package=devfactory/taxonomy
+    php artisan migrate --package=trexology/taxonomy
 
 And finally in any of the Models where you want to use the Taxonomy functionality, add the following trait:
 
@@ -81,7 +81,7 @@ And finally in any of the Models where you want to use the Taxonomy functionalit
 <?php
 
 class Car extends \Eloquent {
-  use \Devfactory\Taxonomy\TaxonomyTrait;
+  use \Trexology\Taxonomy\TaxonomyTrait;
 }
 ```
 

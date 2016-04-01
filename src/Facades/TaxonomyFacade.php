@@ -1,4 +1,4 @@
-<?php namespace Devfactory\Taxonomy\Facades;
+<?php namespace Trexology\Taxonomy\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
