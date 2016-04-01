@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 
 use Config;
-use Input;
+use Request;
 use Lang;
 use Redirect;
 use Response;
@@ -65,7 +65,7 @@ class TaxonomyController extends BaseController {
   public function postStore(Request $request) {
     $this->validate($request, isset($this->vocabulary->rules_create) ? $this->vocabulary->rules_create : $this->vocabulary->rules);
 
-    Vocabulary::create(Input::only('name'));
+    Vocabulary::create(Request::only('name'));
 
     return Redirect::to(action('\Trexology\Taxonomy\Controllers\TaxonomyController@getIndex'))->with('success', 'Created');
 
@@ -97,7 +97,7 @@ class TaxonomyController extends BaseController {
     $this->validate($request, isset($this->vocabulary->rules_create) ? $this->vocabulary->rules_create : $this->vocabulary->rules);
 
     $vocabulary = $this->vocabulary->findOrFail($id);
-    $vocabulary->update(Input::only('name'));
+    $vocabulary->update(Request::only('name'));
 
     return Redirect::to(action('\Trexology\Taxonomy\Controllers\TaxonomyController@getIndex'))->with('success', 'Updated');
 
@@ -142,7 +142,7 @@ class TaxonomyController extends BaseController {
     $this->vocabulary->find($id);
 
     $request = \Request::instance();
-    $content = json_decode(Input::get('json'));
+    $content = json_decode(Request::get('json'));
 
     foreach ($content as $parent_key => $parent){
       $parent_term = Term::find($parent->id);

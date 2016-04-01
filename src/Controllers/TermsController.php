@@ -1,7 +1,7 @@
 <?php namespace Trexology\Taxonomy\Controllers;
 
 use Config;
-use Input;
+use Request;
 use Lang;
 use Redirect;
 use Response;
@@ -55,7 +55,7 @@ class TermsController extends BaseController {
    * @return Response
    */
   public function postStore() {
-    $validation = Validator::make(Input::all(), Term::$rules);
+    $validation = Validator::make(Request::all(), Term::$rules);
 
     if ($validation->fails()) {
       return Redirect::back()
@@ -64,9 +64,9 @@ class TermsController extends BaseController {
         ->with('error', 'There were validation errors.');
     }
 
-    $vocabulary = Vocabulary::findOrFail(Input::get('vocabulary_id'));
+    $vocabulary = Vocabulary::findOrFail(Request::get('vocabulary_id'));
 
-    $term = \Taxonomy::createTerm($vocabulary->id, Input::get('name'));
+    $term = \Taxonomy::createTerm($vocabulary->id, Request::get('name'));
 
     return Redirect::to(action('\Trexology\Taxonomy\Controllers\TermsController@getIndex', ['id' => $vocabulary->id]))->with('success', 'Created');
   }
@@ -88,7 +88,7 @@ class TermsController extends BaseController {
   }
 
   public function getIndex() {
-    $vocabulary = Vocabulary::findOrFail(Input::get('id'));
+    $vocabulary = Vocabulary::findOrFail(Request::get('id'));
     $terms = $vocabulary->terms()->orderBy('parent', 'ASC')->orderBy('weight', 'ASC')->get();
 
     $ordered_terms = [];
@@ -116,7 +116,7 @@ class TermsController extends BaseController {
    * @return Response
    */
   public function putUpdate($id) {
-    $validation = Validator::make(Input::all(), Term::$rules);
+    $validation = Validator::make(Request::all(), Term::$rules);
 
     if ($validation->fails()) {
       return Redirect::back()
@@ -126,7 +126,7 @@ class TermsController extends BaseController {
     }
 
     $term = Term::find($id);
-    $term->name = Input::get('name');
+    $term->name = Request::get('name');
     $term->save();
 
     return Redirect::to(action('\Trexology\Taxonomy\Controllers\TermsController@getIndex', ['id' => $term->vocabulary_id]))->with('success', 'Updated');
