@@ -1,5 +1,7 @@
 <?php namespace Trexology\Taxonomy\Controllers;
 
+use Illuminate\Http\Request;
+
 use Config;
 use Lang;
 use Redirect;
@@ -53,8 +55,8 @@ class TermsController extends BaseController {
    *
    * @return Response
    */
-  public function postStore() {
-    $validation = Validator::make(Request::all(), Term::$rules);
+  public function postStore(Request $request) {
+    $validation = Validator::make($request->all(), Term::$rules);
 
     if ($validation->fails()) {
       return Redirect::back()
@@ -63,9 +65,9 @@ class TermsController extends BaseController {
         ->with('error', 'There were validation errors.');
     }
 
-    $vocabulary = Vocabulary::findOrFail(Request::get('vocabulary_id'));
+    $vocabulary = Vocabulary::findOrFail($request->vocabulary_id);
 
-    $term = \Taxonomy::createTerm($vocabulary->id, Request::get('name'));
+    $term = \Taxonomy::createTerm($vocabulary->id, $request->name);
 
     return Redirect::to(action('\Trexology\Taxonomy\Controllers\TermsController@getIndex', ['id' => $vocabulary->id]))->with('success', 'Created');
   }
@@ -86,10 +88,9 @@ class TermsController extends BaseController {
      return View::make('taxonomy::terms.edit', compact('term'));
   }
 
-  public function getIndex() {
-    $vocabulary = Vocabulary::findOrFail(Request::get('id'));
+  public function getIndex(Request $request) {
+    $vocabulary = Vocabulary::findOrFail($request->id);
     $terms = $vocabulary->terms()->orderBy('parent', 'ASC')->orderBy('weight', 'ASC')->get();
-
     $ordered_terms = [];
     foreach ($terms as $term) {
       if (!$term->parent) {

@@ -64,7 +64,7 @@ class TaxonomyController extends BaseController {
   public function postStore(Request $request) {
     $this->validate($request, isset($this->vocabulary->rules_create) ? $this->vocabulary->rules_create : $this->vocabulary->rules);
 
-    Vocabulary::create(Request::only('name'));
+    Vocabulary::create($request->only('name'));
 
     return Redirect::to(action('\Trexology\Taxonomy\Controllers\TaxonomyController@getIndex'))->with('success', 'Created');
 
