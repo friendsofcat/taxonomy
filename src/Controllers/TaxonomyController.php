@@ -84,7 +84,7 @@ class TaxonomyController extends BaseController {
     Term::destroy($terms);
     $this->vocabulary->destroy($id);
 
-    return response()->json(['OK']);
+    return Redirect::back();
   }
 
   /**
@@ -96,7 +96,7 @@ class TaxonomyController extends BaseController {
     $this->validate($request, isset($this->vocabulary->rules_create) ? $this->vocabulary->rules_create : $this->vocabulary->rules);
 
     $vocabulary = $this->vocabulary->findOrFail($id);
-    $vocabulary->update(Request::only('name'));
+    $vocabulary->update($request->only('name'));
 
     return Redirect::to(action('\Trexology\Taxonomy\Controllers\TaxonomyController@getIndex'))->with('success', 'Updated');
 

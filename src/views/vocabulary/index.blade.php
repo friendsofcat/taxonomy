@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-sm-12">
         {!! Form::open(array('method'=>'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@getCreate'))) !!}
-        {!! Form::submit(trans('general.buttons.add'), array('class' => 'btn btn-primary btn-flat margin-bottom')) !!}
+        {!! Form::submit(Lang::get('taxonomy::general.button.create'), array('class' => 'btn btn-primary btn-flat margin-bottom')) !!}
         {!! Form::close() !!}
    </div>
   </div>
@@ -52,20 +52,17 @@
                     </a>
                   </td>
                   <td class="text-right">
-
-                    <div class="btn-group">
                     <div class="btn-group">
                           {!! Form::open(array('method'=>'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@getEdit', $vocabulary->id))) !!}
-                          {!! Form::submit(trans('general.buttons.edit'), array('class' => 'btn btn-xs btn-primary btn-flat')) !!}
+                          {!! Form::submit(Lang::get('taxonomy::general.button.edit'), array('class' => 'btn btn-xs btn-primary btn-flat')) !!}
                           {!! Form::close() !!}
                       </div>
+
                       <div class="btn-group">
                           {!! Form::open(array('method'=>'DELETE', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@deleteDestroy', $vocabulary->id))) !!}
-                          {!! Form::submit(trans('general.buttons.delete'), array('class' => 'delete-confirm-dialog btn btn-xs btn-danger btn-flat')) !!}
+                          {!! Form::submit(Lang::get('taxonomy::general.button.delete'), array('class' => 'delete-confirm-dialog btn btn-xs btn-danger btn-flat')) !!}
                           {!! Form::close() !!}
                       </div>
-                    </div>
-
                   </td>
                 </tr>
               @endforeach

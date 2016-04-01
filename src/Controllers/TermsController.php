@@ -115,8 +115,8 @@ class TermsController extends BaseController {
    * @param  int  $id
    * @return Response
    */
-  public function putUpdate($id) {
-    $validation = Validator::make(Request::all(), Term::$rules);
+  public function putUpdate(Request $request, $id) {
+    $validation = Validator::make($request->all(), Term::$rules);
 
     if ($validation->fails()) {
       return Redirect::back()
@@ -126,7 +126,7 @@ class TermsController extends BaseController {
     }
 
     $term = Term::find($id);
-    $term->name = Request::get('name');
+    $term->name = $request->name;
     $term->save();
 
     return Redirect::to(action('\Trexology\Taxonomy\Controllers\TermsController@getIndex', ['id' => $term->vocabulary_id]))->with('success', 'Updated');
@@ -145,7 +145,7 @@ class TermsController extends BaseController {
     // Delete Term
     Term::destroy($id);
 
-    return Response::make('OK', 200);
+    return Redirect::back();
   }
 
 }
