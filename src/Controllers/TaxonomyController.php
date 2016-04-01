@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 
 use Config;
-use Request;
 use Lang;
 use Redirect;
 use Response;

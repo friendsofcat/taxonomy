@@ -1,7 +1,6 @@
 <?php namespace Trexology\Taxonomy\Controllers;
 
 use Config;
-use Request;
 use Lang;
 use Redirect;
 use Response;
