@@ -2,26 +2,26 @@
 
 return array(
   'table' => array(
+    'title' => 'Terms for',
     'name' => 'Name',
-    'terms' => 'Terms',
     'actions' => '',
   ),
   'create' => array(
-    'header' => 'Create a term',
+    'header' => 'Create a Term',
     'label' => array(
       'name' => 'Name',
     ),
     'button' => array(
-      'add' => 'Add',
+      'add' => 'Add Term',
     ),
   ),
   'edit' => array(
-    'header' => 'Edit term',
-    'button' => array(
-      'save' => 'Save',
-    ),
+    'header' => 'Edit Term',
     'label' => array(
       'name' => 'Name',
+    ),
+    'button' => array(
+      'edit' => 'Save',
     ),
   ),
 );

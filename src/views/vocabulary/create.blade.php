@@ -1,11 +1,7 @@
 @Extends($layout->extends)
 
-@section($layout->header)
-  <h1>@lang('taxonomy::vocabulary.create.header')</h1>
-@stop
-
 @section($layout->content)
-
+  <h1>@lang('taxonomy::vocabulary.create.header')</h1>
   <div class="row">
 
     {!! Form::open(array('method'=>'POST', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@postStore'))) !!}
@@ -27,7 +23,7 @@
 
         <div class="box-footer">
           <button type="submit" class="btn btn-flat btn-primary">
-            @lang('taxonomy::vocabulary.create.button.create')
+            @lang('taxonomy::vocabulary.create.button.add')
           </button>
         </div>
 

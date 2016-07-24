@@ -1,31 +1,25 @@
 @extends($layout->extends)
 
-@section($layout->header)
-  <h1>@lang('taxonomy::vocabulary.index.header')</h1>
-@stop
-
 @section($layout->content)
-
+  <h1>@lang('taxonomy::general.title')</h1>
   <div class="row">
     <div class="col-sm-12">
         {!! Form::open(array('method'=>'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@getCreate'))) !!}
-        {!! Form::submit(Lang::get('taxonomy::general.button.create'), array('class' => 'btn btn-primary btn-flat margin-bottom')) !!}
+        {!! Form::submit(Lang::get('taxonomy::vocabulary.create.button.add'), array('class' => 'btn btn-primary btn-flat margin-bottom')) !!}
         {!! Form::close() !!}
    </div>
   </div>
 
   <div class="row">
 
-    <div class="col-sm-12 col-md-6">
+    <div class="col-xs-12">
 
       <div class="box">
 
         <div class="box-header">
-
           <h3 class="box-title">
-            @lang('taxonomy::vocabulary.vocabularies')
+            @lang('taxonomy::vocabulary.table.title')
           </h3>
-
         </div>
 
         <div class="box-body table-responsive no-padding">

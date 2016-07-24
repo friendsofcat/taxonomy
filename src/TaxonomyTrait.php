@@ -67,7 +67,10 @@ trait TaxonomyTrait {
   public function getTermsByVocabularyName($name) {
     $vocabulary = \Taxonomy::getVocabularyByName($name);
 
-    return $this->related()->where('vocabulary_id', $vocabulary->id)->get();
+    return $this->related()
+    ->join("terms", "term_id", '=', "terms.id" )
+    ->where('term_relations.vocabulary_id', $vocabulary->id)
+    ->get();
   }
 
   /**
@@ -83,14 +86,9 @@ trait TaxonomyTrait {
   public function getTermsByVocabularyNameAsArray($name) {
     $vocabulary = \Taxonomy::getVocabularyByName($name);
 
-    $term_relations = $this->related()->where('vocabulary_id', $vocabulary->id)->get();
-
-    $data = [];
-    foreach ($term_relations as $term_relation) {
-      $data[$term_relation->term->id] = $term_relation->term->name;
-    }
-
-    return $data;
+    return $term_relations = $this->related()
+    ->join("terms", "term_id", '=', "terms.id" )
+    ->where('term_relations.vocabulary_id', $vocabulary->id)->lists("terms.name","term_id");
   }
 
   /**

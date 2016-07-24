@@ -1,11 +1,7 @@
 @extends($layout->extends)
 
-@section($layout->header)
-  <h1>@lang('taxonomy::terms.create.header')</h1>
-@stop
-
 @section($layout->content)
-
+  <h1>@lang('taxonomy::terms.create.header')</h1>
   <div class="row">
 
     {!! Form::open(array('method' => 'POST',  'url' => action('\Trexology\Taxonomy\Controllers\TermsController@postStore'), 'id' => 'app-update', 'class' => 'form')) !!}

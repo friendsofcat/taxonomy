@@ -1,11 +1,7 @@
 @extends($layout->extends)
 
-@section($layout->header)
-  <h1>@lang('taxonomy::terms.edit.header')</h1>
-@stop
-
 @section($layout->content)
-
+  <h1>@lang('taxonomy::terms.edit.header')</h1>
     <div class="row">
 
     {!! Form::open(array('method' => 'PUT', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@putUpdate', $term->id), 'id' => 'app-update', 'class' => 'form')) !!}
@@ -27,7 +23,7 @@
 
         <div class="box-footer">
           <button type="submit" class="btn btn-flat btn-primary">
-            @lang('taxonomy::terms.edit.button.save')
+            @lang('taxonomy::terms.edit.button.edit')
           </button>
         </div>
 

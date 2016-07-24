@@ -1,11 +1,6 @@
 @extends($layout->extends)
 
-@section($layout->header)
-  <h1>@lang('taxonomy::vocabulary.edit.header'){!! $vocabulary->name !!}</h1>
-@stop
-
 @section($layout->content)
-
   <style type="text/css">
 
    /**
@@ -56,30 +51,30 @@
 
   <div class="row">
 
-    <div class="col-md-6">
+    <div class="col-xs-12">
 
       <div class="box box-primary">
 
           <div class="box-header">
+
               <div class="btn-group">
                   {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@getIndex'))) !!}
-                  {!! Form::button(Lang::get('taxonomy::vocabulary.edit.button.back'), array('class'=>'btn btn-primary btn-flat', 'type' => 'submit')) !!}
+                  {!! Form::button(Lang::get('taxonomy::general.button.back'), array('class'=>'btn btn-primary btn-flat', 'type' => 'submit')) !!}
                   {!! Form::close() !!}
               </div>
               <div class="btn-group">
                   {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@getCreate', $vocabulary->id))) !!}
-                  {!! Form::button(Lang::get('taxonomy::vocabulary.edit.button.add_term'), array('class'=>'btn btn-success btn-flat', 'type' => 'submit')) !!}
+                  {!! Form::button(Lang::get('taxonomy::terms.create.button.add'), array('class'=>'btn btn-success btn-flat', 'type' => 'submit')) !!}
                   {!! Form::close() !!}
               </div>
+
+              <h3 class="box-title">
+                @lang('taxonomy::terms.table.title') "{!! $vocabulary->name !!}"
+                @lang('taxonomy::terms.table.actions')
+              </h3>
           </div>
 
         <div class="box-body">
-
-          <p>
-            @lang('taxonomy::vocabulary.table.terms')
-
-            @lang('taxonomy::vocabulary.table.actions')
-          </p>
 
           <div class="dd">
             <ul class="dd-list">
@@ -98,13 +93,13 @@
                     <div class="pull-right">
                       <div class="btn-group">
                         {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@getEdit', $parent['term']->id))) !!}
-                        {!! Form::button(Lang::get('taxonomy::vocabulary.button.edit'), array('class'=>'btn btn-xs btn-primary btn-flat', 'type' => 'submit')) !!}
+                        {!! Form::button(Lang::get('taxonomy::general.button.edit'), array('class'=>'btn btn-xs btn-primary btn-flat', 'type' => 'submit')) !!}
                         {!! Form::close() !!}
                       </div>
 
                       <div class="btn-group">
                         {!! Form::open(array('method' => 'DELETE', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@deleteDestroy', $parent['term']->id))) !!}
-                        {!! Form::button(Lang::get('taxonomy::vocabulary.button.delete'), array('class'=>'delete-confirm-dialog btn btn-xs btn-danger btn-flat', 'type' => 'submit')) !!}
+                        {!! Form::button(Lang::get('taxonomy::general.button.delete'), array('class'=>'delete-confirm-dialog btn btn-xs btn-danger btn-flat', 'type' => 'submit')) !!}
                         {!! Form::close() !!}
                       </div>
                     </div>
@@ -126,13 +121,13 @@
                           <div class="pull-right">
                             <div class="btn-group">
                               {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@getEdit', $child->id))) !!}
-                              {!! Form::button(Lang::get('taxonomy::vocabulary.button.edit'), array('class'=>'btn btn-xs btn-primary btn-flat', 'type' => 'submit')) !!}
+                              {!! Form::button(Lang::get('taxonomy::general.button.edit'), array('class'=>'btn btn-xs btn-primary btn-flat', 'type' => 'submit')) !!}
                               {!! Form::close() !!}
                             </div>
 
                             <div class="btn-group">
                               {!! Form::open(array('method' => 'DELETE', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@deleteDestroy', $child->id))) !!}
-                              {!! Form::button(Lang::get('taxonomy::vocabulary.button.delete'), array('class'=>'delete-confirm-dialog btn btn-xs btn-danger btn-flat', 'type' => 'submit')) !!}
+                              {!! Form::button(Lang::get('taxonomy::general.button.delete'), array('class'=>'delete-confirm-dialog btn btn-xs btn-danger btn-flat', 'type' => 'submit')) !!}
                               {!! Form::close() !!}
                             </div>
                           </div>

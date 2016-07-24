@@ -2,17 +2,17 @@
 
 return array(
   'table' => array(
+    'title' => 'All Vocabularies',
     'name' => 'Name',
-    'terms' => 'Terms',
     'actions' => '',
   ),
   'create' => array(
-    'header' => 'Create a new Vocabulary',
+    'header' => 'Create Vocabulary',
     'label' => array(
       'name' => 'Name',
     ),
     'button' => array(
-      'name' => 'Create',
+      'add' => 'Add Vocabulary',
     ),
   ),
   'edit' => array(
@@ -21,9 +21,7 @@ return array(
       'name' => 'Name',
     ),
     'button' => array(
-      'name' => 'Edit',
+      'edit' => 'Save',
     ),
   ),
-
-  'vocabularies' => 'Vocabularies',
 );
