@@ -7,7 +7,7 @@
     * Nestable
     */
 
-   .dd { position: relative; display: block; margin: 0; padding: 0; max-width: 600px; list-style: none; font-size: 13px; line-height: 20px; }
+   .dd { position: relative; display: block; margin: 0; padding: 0; list-style: none; font-size: 13px; line-height: 20px; }
 
    .dd-list { display: block; position: relative; margin: 0; padding: 0; list-style: none; }
    .dd-list .dd-list { padding-left: 30px; }
@@ -104,36 +104,8 @@
                       </div>
                     </div>
                   </div>
-
                   <ul class="dd-list">
-                    @foreach ($parent['children'] as $term_weight => $child)
-                      <li class="dd-item" data-id="{!! $child->id !!}">
-                        <!-- drag handle -->
-                        <div class="handle dd-handle">
-                          <i class="fa fa-ellipsis-v"></i>
-                          <i class="fa fa-ellipsis-v"></i>
-                          &nbsp;
-                          <!-- checkbox -->
-                          <!-- todo text -->
-                          <span class="text">{!! $child->name !!}</span>
-                          <!-- Emphasis label -->
-                          <!-- General tools such as edit or delete-->
-                          <div class="pull-right">
-                            <div class="btn-group">
-                              {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@getEdit', $child->id))) !!}
-                              {!! Form::button(Lang::get('taxonomy::general.button.edit'), array('class'=>'btn btn-xs btn-primary btn-flat', 'type' => 'submit')) !!}
-                              {!! Form::close() !!}
-                            </div>
-
-                            <div class="btn-group">
-                              {!! Form::open(array('method' => 'DELETE', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@deleteDestroy', $child->id))) !!}
-                              {!! Form::button(Lang::get('taxonomy::general.button.delete'), array('class'=>'delete-confirm-dialog btn btn-xs btn-danger btn-flat', 'type' => 'submit')) !!}
-                              {!! Form::close() !!}
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    @endforeach
+                    @each('taxonomy::terms.term', $parent['children'], 'child')
                   </ul>
                 </li>
               @endforeach
@@ -157,7 +129,6 @@
        listNodeName: 'ul',
        expandBtnHTML: '',
        collapseBtnHTML: '',
-       maxDepth:2,
      });
 
      $('.dd').on('change', function() {
