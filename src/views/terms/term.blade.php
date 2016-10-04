@@ -6,7 +6,7 @@
     &nbsp;
     <!-- checkbox -->
     <!-- todo text -->
-    <span class="text">{!! $child->name !!}</span>
+    <span class="text">{!! $child->id !!} | {!! $child->name !!}</span>
     <!-- Emphasis label -->
     <!-- General tools such as edit or delete-->
     <div class="pull-right">
@@ -23,12 +23,7 @@
       </div>
     </div>
   </div>
+  <ul class="dd-list">
+    @each('taxonomy::terms.term', $child->child, 'child')
+  </ul>
 </li>
-
-{{--
-
-@foreach ($child['children'] as $term_weight => $child)
-   @include('taxonomy::terms.term', $child)
-@endforeach
-
- --}}

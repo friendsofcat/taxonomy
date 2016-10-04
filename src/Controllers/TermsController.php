@@ -12,6 +12,8 @@ use Validator;
 use View;
 use Helpers;
 
+use DB;
+
 use Trexology\Taxonomy\Models\Vocabulary;
 use Trexology\Taxonomy\Models\Term;
 
@@ -89,25 +91,36 @@ class TermsController extends BaseController {
   }
 
   public function getIndex(Request $request) {
-    $vocabulary = Vocabulary::findOrFail($request->id);
-    $terms = $vocabulary->terms()->orderBy('parent', 'ASC')->orderBy('weight', 'ASC')->get();
-    $ordered_terms = [];
-    foreach ($terms as $term) {
-      if (!$term->parent) {
-        $ordered_terms[$term->id] = [
-          'term' => $term,
-          'children' => [],
-        ];
-      }
-      else {
-        $ordered_terms[$term->parent]['children'][] = $term;
-      }
-    }
+		$vocabulary = Vocabulary::findOrFail($request->id);
 
-    $terms = $ordered_terms;
+		$parents = DB::select("SELECT id, name, EXISTS (SELECT id FROM terms as children WHERE children.parent = terms.id LIMIT 1) as child
+		from terms
+		where terms.parent = 0 and terms.vocabulary_id = ?
+		order by terms.weight ASC", [$request->id]);
+
+		$terms = $this->getChild($parents);
 
     return view('taxonomy::terms.index', compact('vocabulary', 'terms'));
   }
+
+	private function getChild($parents)
+	{
+
+		foreach ($parents as $key => &$term) {
+				if ($term->child) {
+					$term->child = DB::select("SELECT id, name, EXISTS (SELECT id FROM terms as children WHERE children.parent = terms.id LIMIT 1) as child
+					from terms
+					where terms.parent = ?
+					order by terms.weight ASC", [$term->id]);
+
+					$this->getChild($term->child);
+				}
+				else{
+					$term->child = []; // Cast null to empty array
+				}
+		}
+		return $parents;
+	}
 
   /**
    * Update the specified resource in storage.

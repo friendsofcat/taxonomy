@@ -143,27 +143,24 @@ class TaxonomyController extends BaseController {
     $request = \Request::instance();
     $content = json_decode($request->json);
 
-    foreach ($content as $parent_key => $parent){
-      $parent_term = Term::find($parent->id);
+		$this->saveOrderTerms($content, 0);
 
-      $parent_term->parent = 0;
-      $parent_term->weight = $parent_key;
-      $parent_term->save();
+  }
 
-      if (empty($parent->children)) {
-        continue;
-      }
-
-      foreach ($parent->children as $child_key => $child){
+	public function saveOrderTerms($content, $parent_term) {
+		  foreach ($content as $child_key => $child){
         $child_term = Term::find($child->id);
 
-        $child_term->parent = $parent_term->id;
+        $child_term->parent = $parent_term;
         $child_term->weight = $child_key;
 
         $child_term->save();
-      }
-    }
 
-  }
+				if (!empty($child->children)) {
+		    	$this->saveOrderTerms($child->children, $child->id);
+		    }
+
+      }
+	}
 
 }
