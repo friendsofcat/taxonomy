@@ -14,7 +14,7 @@ This package allows you to create vocabularies with terms in Laravel 4 and 5
 In your `composer.json` add:
 
 	"require": {
-		"trexology/taxonomy": "3.0.*"
+		"trexology/taxonomy": "3.*"
 	}
 
 From the terminal run
