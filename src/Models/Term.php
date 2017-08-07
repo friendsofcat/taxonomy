@@ -2,12 +2,11 @@
 
 class Term extends \Eloquent {
 
-  protected $fillable = [
-    'name',
-    'vocabulary_id',
-    'parent',
-    'weight',
-  ];
+  protected $guarded =[
+    'id',
+    'created_at',
+    'updated_at'
+  ]
 
 	public static $rules = [
 		'name' => 'required'

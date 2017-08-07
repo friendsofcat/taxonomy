@@ -125,6 +125,16 @@ $term_benz = Taxonomy::CreateTerm($vocabulary->id, 'Mercedes-Benz', $german_cars
 $term_ferrari = Taxonomy::CreateTerm($vocabulary->id, 'Ferrari', $italian_cars->id, 0);
 ```
 
+If terms contains additional params, it can be added in this manner:
+
+```php
+$params = [
+	'shortname' => "GC",
+	'type' => "Premium Cars",
+];
+$german_cars = Taxonomy::createTerm($vocabulary->id, 'German Cars', 0, $params);
+```
+
 With the Car Model, I can create a new instance and assign it a term for the make it belongs to:
 
 ```php

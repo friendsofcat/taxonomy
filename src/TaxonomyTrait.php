@@ -46,11 +46,6 @@ trait TaxonomyTrait {
   public function hasTerm($term_id) {
     $term = ($term_id instanceof Term) ? $term_id : Term::findOrFail($term_id);
 
-    $term_relation = [
-      'term_id' => $term->id,
-      'vocabulary_id' => $term->vocabulary_id,
-    ];
-
     return ($this->related()->where('term_id', $term_id)->count()) ? TRUE : FALSE;
   }
 
