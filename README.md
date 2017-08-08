@@ -132,7 +132,7 @@ $params = [
 	'shortname' => "GC",
 	'type' => "Premium Cars",
 ];
-$german_cars = Taxonomy::createTerm($vocabulary->id, 'German Cars', 0, $params);
+$german_cars = Taxonomy::CreateTerm($vocabulary->id, 'BMW', $german_cars->id, 0, $params)
 ```
 
 With the Car Model, I can create a new instance and assign it a term for the make it belongs to:
