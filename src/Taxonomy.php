@@ -188,14 +188,18 @@ class Taxonomy {
   public function createTerm($vid, $name, $parent = 0, $weight = 0, $params = []) {
     $vocabulary = $this->vocabulary->findOrFail($vid);
 
-    $term = [
+    $fields = [
       'name' => $name,
       'vocabulary_id' => $vid,
       'parent' => $parent,
       'weight' => $weight,
     ];
 
-    return $this->term->create($term);
+    if (!empty($params)) {
+      $fields = array_merge($fields,$params);
+    }
+
+    return $this->term->create($fields);
   }
 
 }
