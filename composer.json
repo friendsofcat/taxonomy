@@ -23,12 +23,12 @@
     }
   },
   "extra": {
-    "laravel":{
-      "providers":[
-        "Trexology\Taxonomy\TaxonomyServiceProvider"
+    "laravel": {
+      "providers": [
+        "Trexology\\Taxonomy\\TaxonomyServiceProvider"
       ],
-      "aliases":{
-        'Taxonomy': 'Trexology\Taxonomy\Facades\TaxonomyFacade'
+      "aliases": {
+        "Taxonomy": "Trexology\\Taxonomy\\Facades\\TaxonomyFacade"
       }
     }
   }
