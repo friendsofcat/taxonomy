@@ -23,8 +23,13 @@
     }
   },
   "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
+    "laravel":{
+      "providers":{
+        "Trexology\Taxonomy\TaxonomyServiceProvider"
+      }
+      "aliases":{
+        'Taxonomy': 'Trexology\Taxonomy\Facades\TaxonomyFacade'
+      }
     }
   }
 }
