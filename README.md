@@ -165,7 +165,7 @@ $audis = Car::getAllByTermId($term_audi->id)->get();
 ```
 
 
-Add these lines to your routes file access the UI to manage terms
+Add these lines to your routes file, to access the UI for managing terms/vocabulary
 
 ```php
 Route::resource('taxonomy', '\Trexology\Taxonomy\Controllers\TaxonomyController');
