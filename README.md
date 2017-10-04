@@ -23,6 +23,8 @@ From the terminal run
 
 Then register the service provider and Facade by opening `app/config/app.php`
 
+(Skip this step if you are on laravel 5.5)
+
 ```php
 'Trexology\Taxonomy\TaxonomyServiceProvider',
 
