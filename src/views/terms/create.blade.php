@@ -1,39 +1,39 @@
 @extends($layout->extends)
 
 @section($layout->content)
-  <h1>@lang('taxonomy::terms.create.header')</h1>
-  <div class="row">
+  <div class="content">
+    <h1>@lang('taxonomy::terms.create.header')</h1>
+    <div class="row">
+      {!! Form::open(array('method' => 'POST',  'url' => action('\Trexology\Taxonomy\Controllers\TermsController@store'), 'id' => 'app-update', 'class' => 'form')) !!}
 
-    {!! Form::open(array('method' => 'POST',  'url' => action('\Trexology\Taxonomy\Controllers\TermsController@postStore'), 'id' => 'app-update', 'class' => 'form')) !!}
+      <div class="col-md-12">
 
-    <div class="col-md-6">
+        <div class="box box-primary">
+          <div class="box-body">
 
-      <div class="box box-primary">
+            <div class="form-group{!! $errors->has('name') ? ' has-error has-feedback' : '' !!}">
+              {!! Form::label('name', Lang::get('taxonomy::terms.create.label.name'), ['class' => 'control-label']) !!}
+              {!! Form::text('name', NULL, ['class' => 'form-control']) !!}
+              {!! $errors->has('name') ? Form::label('error', $errors->first('name'), array('class' => 'control-label')) : '' !!}
+              {!! $errors->has('name') ? '<span class="glyphicon glyphicon-remove form-control-feedback"></span>' : '' !!}
+            </div>
 
-        <div class="box-body">
+            {!! Form::hidden('vocabulary_id', $vocabulary_id) !!}
 
-          <div class="form-group{!! $errors->has('name') ? ' has-error has-feedback' : '' !!}">
-            {!! Form::label('name', Lang::get('taxonomy::terms.create.label.name'), ['class' => 'control-label']) !!}
-            {!! Form::text('name', NULL, ['class' => 'form-control']) !!}
-            {!! $errors->has('name') ? Form::label('error', $errors->first('name'), array('class' => 'control-label')) : '' !!}
-            {!! $errors->has('name') ? '<span class="glyphicon glyphicon-remove form-control-feedback"></span>' : '' !!}
           </div>
 
-          {!! Form::hidden('vocabulary_id', $vocabulary_id) !!}
+          <div class="box-footer">
+            <button type="submit" class="btn btn-flat btn-primary">
+              @lang('taxonomy::terms.create.button.add')
+            </button>
+          </div>
 
         </div>
-
-        <div class="box-footer">
-          <button type="submit" class="btn btn-flat btn-primary">
-            @lang('taxonomy::terms.create.button.add')
-          </button>
-        </div>
-
       </div>
+
+      {!! Form::close() !!}
+
     </div>
-
-    {!! Form::close() !!}
-
   </div>
 
 @stop

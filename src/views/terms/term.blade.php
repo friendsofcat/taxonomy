@@ -11,13 +11,13 @@
     <!-- General tools such as edit or delete-->
     <div class="pull-right">
       <div class="btn-group">
-        {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@getEdit', $child->id))) !!}
+        {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@edit', $child->id))) !!}
         {!! Form::button(Lang::get('taxonomy::general.button.edit'), array('class'=>'btn btn-xs btn-primary btn-flat', 'type' => 'submit')) !!}
         {!! Form::close() !!}
       </div>
 
       <div class="btn-group">
-        {!! Form::open(array('method' => 'DELETE', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@deleteDestroy', $child->id))) !!}
+        {!! Form::open(array('method' => 'DELETE', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@destroy', $child->id))) !!}
         {!! Form::button(Lang::get('taxonomy::general.button.delete'), array('class'=>'delete-confirm-dialog btn btn-xs btn-danger btn-flat', 'type' => 'submit')) !!}
         {!! Form::close() !!}
       </div>

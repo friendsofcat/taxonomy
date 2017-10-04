@@ -4,7 +4,7 @@ return array(
   'table' => array(
     'title' => 'All Vocabularies',
     'name' => 'Name',
-    'actions' => '',
+    'actions' => 'Actions',
   ),
   'create' => array(
     'header' => 'Create Vocabulary',

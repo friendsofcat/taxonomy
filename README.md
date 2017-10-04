@@ -66,7 +66,7 @@ Then register the service provider and Facade by opening `app/config/app.php`
 ```php
 'Trexology\Taxonomy\TaxonomyServiceProvider',
 
-'Taxonomy'        => 'Trexology\Taxonomy\Facades\TaxonomyFacade',
+'Taxonomy' => 'Trexology\Taxonomy\Facades\TaxonomyFacade',
 ```
 
 If you want you can publish the config files if you want to change them
@@ -164,9 +164,12 @@ To retrieve all the cars that match a given term:
 $audis = Car::getAllByTermId($term_audi->id)->get();
 ```
 
-Add these line to your routes.php to manage your terms
+
+Add these lines to your routes file access the UI to manage terms
 
 ```php
-Route::controller('taxonomy', '\Trexology\Taxonomy\Controllers\TaxonomyController');
-Route::controller('terms', '\Trexology\Taxonomy\Controllers\TermsController');
+Route::resource('taxonomy', '\Trexology\Taxonomy\Controllers\TaxonomyController');
+Route::post('postOrderTerms', '\Trexology\Taxonomy\Controllers\TaxonomyController@postOrderTerms');
+Route::resource('terms', '\Trexology\Taxonomy\Controllers\TermsController');
 ```
+Extend UI with your current admin theme by changing the configuration in `taxonomy.config.php`

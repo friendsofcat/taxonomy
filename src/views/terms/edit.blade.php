@@ -1,37 +1,36 @@
 @extends($layout->extends)
 
 @section($layout->content)
-  <h1>@lang('taxonomy::terms.edit.header')</h1>
-    <div class="row">
+  <div class="content">
+    <h1>@lang('taxonomy::terms.edit.header')</h1>
+      <div class="row">
 
-    {!! Form::open(array('method' => 'PUT', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@putUpdate', $term->id), 'id' => 'app-update', 'class' => 'form')) !!}
+      {!! Form::open(array('method' => 'PUT', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@update', $term->id), 'id' => 'app-update', 'class' => 'form')) !!}
 
-    <div class="col-md-6">
+      <div class="col-md-12">
 
-      <div class="box box-primary">
+        <div class="box box-primary">
 
-        <div class="box-body">
+          <div class="box-body">
+            <div class="form-group{!! $errors->has('name') ? ' has-error has-feedback' : '' !!}">
+              {!! Form::label('name', Lang::get('taxonomy::terms.edit.label.name'), ['class' => 'control-label']) !!}
+              {!! Form::text('name', $term->name, ['class' => 'form-control']) !!}
+              {!! $errors->has('name') ? Form::label('error', $errors->first('name'), array('class' => 'control-label')) : '' !!}
+              {!! $errors->has('name') ? '<span class="glyphicon glyphicon-remove form-control-feedback"></span>' : '' !!}
+            </div>
+          </div>
 
-          <div class="form-group{!! $errors->has('name') ? ' has-error has-feedback' : '' !!}">
-            {!! Form::label('name', Lang::get('taxonomy::terms.edit.label.name'), ['class' => 'control-label']) !!}
-            {!! Form::text('name', $term->name, ['class' => 'form-control']) !!}
-            {!! $errors->has('name') ? Form::label('error', $errors->first('name'), array('class' => 'control-label')) : '' !!}
-            {!! $errors->has('name') ? '<span class="glyphicon glyphicon-remove form-control-feedback"></span>' : '' !!}
+          <div class="box-footer">
+            <button type="submit" class="btn btn-flat btn-success">
+              @lang('taxonomy::terms.edit.button.edit')
+            </button>
           </div>
 
         </div>
-
-        <div class="box-footer">
-          <button type="submit" class="btn btn-flat btn-primary">
-            @lang('taxonomy::terms.edit.button.edit')
-          </button>
-        </div>
-
       </div>
+
+      {!! Form::close() !!}
     </div>
-
-    {!! Form::close() !!}
-
   </div>
 
 @stop

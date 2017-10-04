@@ -49,50 +49,41 @@
 
   </style>
 
-  <div class="row">
+  <div class="content">
+    <h1>@lang('taxonomy::terms.table.title') "{!! $vocabulary->name !!}"</h1>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <div class="btn-group">
+                  <a href="{!! action('\Trexology\Taxonomy\Controllers\TaxonomyController@index') !!}" class='btn btn-primary btn-flat'>
+                    {!! Lang::get('taxonomy::general.button.back') !!}
+                  </a>
+                </div>
+                <div class="btn-group pull-right">
+                    <a href="{!! action('\Trexology\Taxonomy\Controllers\TermsController@create', ['vocabulary_id' => $vocabulary->id] )!!}" class="btn btn-success btn-flat">{{Lang::get('taxonomy::terms.create.button.add')}}</a>
+                </div>
+            </div>
 
-    <div class="col-xs-12">
+          <div class="box-body">
+            <div class="dd">
+              <ul class="dd-list">
+                @each('taxonomy::terms.term', $terms, 'child')
+              </ul>
+            </div>
 
-      <div class="box box-primary">
-
-          <div class="box-header">
-
-              <div class="btn-group">
-                  {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@getIndex'))) !!}
-                  {!! Form::button(Lang::get('taxonomy::general.button.back'), array('class'=>'btn btn-primary btn-flat', 'type' => 'submit')) !!}
-                  {!! Form::close() !!}
-              </div>
-              <div class="btn-group">
-                  {!! Form::open(array('method' => 'GET', 'url' => action('\Trexology\Taxonomy\Controllers\TermsController@getCreate', $vocabulary->id))) !!}
-                  {!! Form::button(Lang::get('taxonomy::terms.create.button.add'), array('class'=>'btn btn-success btn-flat', 'type' => 'submit')) !!}
-                  {!! Form::close() !!}
-              </div>
-
-              <h3 class="box-title">
-                @lang('taxonomy::terms.table.title') "{!! $vocabulary->name !!}"
-                @lang('taxonomy::terms.table.actions')
-              </h3>
-          </div>
-
-        <div class="box-body">
-
-          <div class="dd">
-            <ul class="dd-list">
-              @each('taxonomy::terms.term', $terms, 'child')
-            </ul>
           </div>
 
         </div>
-
       </div>
     </div>
-
   </div>
+
 
 @stop
 
-@section('js')
-
+@section($layout->js)
+  <script src="{{ asset('vendor/taxonomy/js/jquery.nestable.js') }}"></script>
   <script>
    $(function() {
      $('.dd').nestable({
@@ -104,7 +95,7 @@
      $('.dd').on('change', function() {
        var json = JSON.stringify($(this).nestable('serialize'));
        $.ajax({
-         url: '{!! action('\Trexology\Taxonomy\Controllers\TaxonomyController@postOrderTerms', $vocabulary->id) !!}',
+         url: '{!! action('\Trexology\Taxonomy\Controllers\TaxonomyController@postOrderTerms',['id'=> $vocabulary->id]) !!}',
          type: 'post',
          data: {
            json
@@ -121,7 +112,5 @@
      });
    });
   </script>
-
-  {!! HTML::script('vendor/taxonomy/js/jquery.nestable.js') !!}
 
 @stop

@@ -4,7 +4,7 @@
   <h1>@lang('taxonomy::vocabulary.edit.header')</h1>
   <div class="row">
 
-    {!! Form::model($vocabulary, array('method' => 'PUT', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@putUpdate', $vocabulary->id), 'id' => 'app-create', 'class' => 'form')) !!}
+    {!! Form::model($vocabulary, array('method' => 'PUT', 'url' => action('\Trexology\Taxonomy\Controllers\TaxonomyController@update', $vocabulary->id), 'id' => 'app-create', 'class' => 'form')) !!}
 
     <div class="col-md-6">
 

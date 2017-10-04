@@ -6,5 +6,6 @@ return array(
     'extends' => 'admin',
     'header' => 'header',
     'content' => 'content',
+		'js' => 'js',
   ],
 );
