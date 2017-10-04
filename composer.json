@@ -24,9 +24,9 @@
   },
   "extra": {
     "laravel":{
-      "providers":{
+      "providers":[
         "Trexology\Taxonomy\TaxonomyServiceProvider"
-      }
+      ],
       "aliases":{
         'Taxonomy': 'Trexology\Taxonomy\Facades\TaxonomyFacade'
       }
