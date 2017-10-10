@@ -38,17 +38,32 @@ class TermsController extends BaseController {
       'extends' => config('taxonomy.config.layout.extends'),
       'header' => config('taxonomy.config.layout.header'),
       'content' => config('taxonomy.config.layout.content'),
+			'js' => config('taxonomy.config.layout.js'),
     ];
 
     View::share('layout', $layout);
   }
+
+	public function index(Request $request) {
+		$vocabulary = Vocabulary::findOrFail($request->id);
+
+		$parents = DB::select("SELECT id, name, EXISTS (SELECT id FROM terms as children WHERE children.parent = terms.id LIMIT 1) as child
+		from terms
+		where terms.parent = 0 and terms.vocabulary_id = ?
+		order by terms.weight ASC", [$request->id]);
+
+		$terms = $this->getChild($parents);
+
+		return view('taxonomy::terms.index', compact('vocabulary', 'terms'));
+	}
 
   /**
    * Show the form for creating a new resource.
    *
    * @return Response
    */
-  public function getCreate($vocabulary_id) {
+  public function create(Request $request) {
+		$vocabulary_id = $request->vocabulary_id;
     return View::make('taxonomy::terms.create', compact('vocabulary_id'));
   }
 
@@ -57,7 +72,7 @@ class TermsController extends BaseController {
    *
    * @return Response
    */
-  public function postStore(Request $request) {
+  public function store(Request $request) {
     $validation = Validator::make($request->all(), Term::$rules);
 
     if ($validation->fails()) {
@@ -71,7 +86,7 @@ class TermsController extends BaseController {
 
     $term = \Taxonomy::createTerm($vocabulary->id, $request->name);
 
-    return Redirect::to(action('\Trexology\Taxonomy\Controllers\TermsController@getIndex', ['id' => $vocabulary->id]))->with('success', 'Created');
+    return Redirect::to(action('\Trexology\Taxonomy\Controllers\TermsController@index', ['id' => $vocabulary->id]))->with('success', 'Created');
   }
 
   /**
@@ -80,7 +95,7 @@ class TermsController extends BaseController {
    * @param  int  $id
    * @return Response
    */
-  public function getEdit($id) {
+  public function edit($id) {
     $term = Term::find($id);
 
     if (is_null($term)) {
@@ -88,19 +103,6 @@ class TermsController extends BaseController {
     }
 
      return View::make('taxonomy::terms.edit', compact('term'));
-  }
-
-  public function getIndex(Request $request) {
-		$vocabulary = Vocabulary::findOrFail($request->id);
-
-		$parents = DB::select("SELECT id, name, EXISTS (SELECT id FROM terms as children WHERE children.parent = terms.id LIMIT 1) as child
-		from terms
-		where terms.parent = 0 and terms.vocabulary_id = ?
-		order by terms.weight ASC", [$request->id]);
-
-		$terms = $this->getChild($parents);
-
-    return view('taxonomy::terms.index', compact('vocabulary', 'terms'));
   }
 
 	private function getChild($parents)
@@ -128,7 +130,7 @@ class TermsController extends BaseController {
    * @param  int  $id
    * @return Response
    */
-  public function putUpdate(Request $request, $id) {
+  public function update(Request $request, $id) {
     $validation = Validator::make($request->all(), Term::$rules);
 
     if ($validation->fails()) {
@@ -142,7 +144,7 @@ class TermsController extends BaseController {
     $term->name = $request->name;
     $term->save();
 
-    return Redirect::to(action('\Trexology\Taxonomy\Controllers\TermsController@getIndex', ['id' => $term->vocabulary_id]))->with('success', 'Updated');
+    return Redirect::to(action('\Trexology\Taxonomy\Controllers\TermsController@index', ['id' => $term->vocabulary_id]))->with('success', 'Updated');
   }
 
   /**
@@ -151,7 +153,7 @@ class TermsController extends BaseController {
    * @param  int  $id
    * @return Response
    */
-  public function deleteDestroy($id) {
+  public function destroy($id) {
     // Delete children if any exist
     Term::whereParent($id)->delete();
 

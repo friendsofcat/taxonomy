@@ -36,6 +36,7 @@ class TaxonomyController extends BaseController {
       'extends' => config('taxonomy.config.layout.extends'),
       'header' => config('taxonomy.config.layout.header'),
       'content' => config('taxonomy.config.layout.content'),
+			'js' => config('taxonomy.config.layout.js'),
     ];
 
     View::share('layout', $layout);
@@ -46,7 +47,7 @@ class TaxonomyController extends BaseController {
    *
    * @return Response
    */
-  public function getIndex() {
+  public function index() {
     $vocabularies = $this->vocabulary->paginate(10);
 
     return view('taxonomy::vocabulary.index', [ 'vocabularies' => $vocabularies]);
@@ -57,16 +58,16 @@ class TaxonomyController extends BaseController {
    *
    * @return Response
    */
-  public function getCreate() {
+  public function create() {
     return view('taxonomy::vocabulary.create');
   }
 
-  public function postStore(Request $request) {
+  public function store(Request $request) {
     $this->validate($request, isset($this->vocabulary->rules_create) ? $this->vocabulary->rules_create : $this->vocabulary->rules);
 
     Vocabulary::create($request->only('name'));
 
-    return Redirect::to(action('\Trexology\Taxonomy\Controllers\TaxonomyController@getIndex'))->with('success', 'Created');
+    return Redirect::to(action('\Trexology\Taxonomy\Controllers\TaxonomyController@index'))->with('success', 'Created');
 
   }
 
@@ -75,7 +76,7 @@ class TaxonomyController extends BaseController {
    *
    * @return Response
    */
-  public function deleteDestroy($id) {
+  public function destroy($id) {
     $vocabulary = $this->vocabulary->find($id);
 
     $terms = $vocabulary->terms->lists('id')->toArray();
@@ -92,13 +93,13 @@ class TaxonomyController extends BaseController {
    *
    * @return Response
    */
-  public function putUpdate(Request $request, $id) {
+  public function update(Request $request, $id) {
     $this->validate($request, isset($this->vocabulary->rules_create) ? $this->vocabulary->rules_create : $this->vocabulary->rules);
 
     $vocabulary = $this->vocabulary->findOrFail($id);
     $vocabulary->update($request->only('name'));
 
-    return Redirect::to(action('\Trexology\Taxonomy\Controllers\TaxonomyController@getIndex'))->with('success', 'Updated');
+    return Redirect::to(action('\Trexology\Taxonomy\Controllers\TaxonomyController@index'))->with('success', 'Updated');
 
   }
 
@@ -108,7 +109,7 @@ class TaxonomyController extends BaseController {
    * @param  int  $id
    * @return Response
    */
-  public function getEdit($id) {
+  public function edit($id) {
     $vocabulary = $this->vocabulary->find($id);
 
     Session::put('vocabulary_id', $vocabulary->id);
@@ -137,8 +138,8 @@ class TaxonomyController extends BaseController {
     return View::make('taxonomy::vocabulary.edit', compact('vocabulary', 'terms'));
   }
 
-  public function postOrderTerms($id) {
-    $this->vocabulary->find($id);
+  public function postOrderTerms(Request $request) {
+    $this->vocabulary->find($request->id);
 
     $request = \Request::instance();
     $content = json_decode($request->json);
