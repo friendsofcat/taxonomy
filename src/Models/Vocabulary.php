@@ -1,23 +1,26 @@
-<?php namespace Trexology\Taxonomy\Models;
+<?php
 
-class Vocabulary extends \Eloquent {
+namespace Trexology\Taxonomy\Models;
 
-  protected $fillable = [
-    'name',
-  ];
+class Vocabulary extends \Eloquent
+{
+    protected $fillable = [
+        'name',
+    ];
 
-  protected $table = 'vocabularies';
+    protected $table = 'vocabularies';
 
-  public $rules = [
-    'name' => 'required'
-  ];
+    public $rules = [
+        'name' => 'required',
+    ];
 
-  public function terms() {
-    return $this->HasMany('Trexology\Taxonomy\Models\Term');
-  }
+    public function terms()
+    {
+        return $this->HasMany('Trexology\Taxonomy\Models\Term');
+    }
 
-  public function relations() {
-    return $this->HasMany('Trexology\Taxonomy\Models\TermRelation');
-  }
-
+    public function relations()
+    {
+        return $this->HasMany('Trexology\Taxonomy\Models\TermRelation');
+    }
 }

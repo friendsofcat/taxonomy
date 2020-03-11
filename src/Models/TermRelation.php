@@ -1,20 +1,23 @@
-<?php namespace Trexology\Taxonomy\Models;
+<?php
 
-class TermRelation extends \Eloquent {
+namespace Trexology\Taxonomy\Models;
 
-  protected $fillable = [
-    'term_id',
-    'vocabulary_id',
-  ];
+class TermRelation extends \Eloquent
+{
+    protected $fillable = [
+        'term_id',
+        'vocabulary_id',
+    ];
 
-	protected $table = 'term_relations';
+    protected $table = 'term_relations';
 
-  public function relationable() {
-    return $this->morphTo();
-  }
+    public function relationable()
+    {
+        return $this->morphTo();
+    }
 
-	public function term() {
-		return $this->belongsTo('Trexology\Taxonomy\Models\Term');
-	}
-
+    public function term()
+    {
+        return $this->belongsTo('Trexology\Taxonomy\Models\Term');
+    }
 }

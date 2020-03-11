@@ -2,339 +2,352 @@
 
 namespace Trexology\Taxonomy\Test;
 
+use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Trexology\Taxonomy\Taxonomy;
-use \Mockery as m;
-
-use Trexology\Taxonomy\Models\Vocabulary;
 use Trexology\Taxonomy\Models\Term;
-use Illuminate\Support\Facades\Facade;
+use Trexology\Taxonomy\Models\Vocabulary;
 
-class TaxonomyTest extends \PHPUnit_Framework_TestCase {
+class TaxonomyTest extends TestCase
+{
+    protected $app;
 
-  protected $app;
+    protected $taxonomy;
 
-  protected $taxonomy;
+    protected $modelVocabulary;
 
-  protected $modelVocabulary;
-  protected $modelTerm;
+    protected $modelTerm;
 
-  protected $eloquent;
+    protected $eloquent;
 
-  /**
-   * Clean mockery after each test
-   *
-   * @return
-   */
-  public function tearDown() {
-    parent::tearDown();
+    /**
+     * Clean mockery after each test
+     *
+     * @return
+     */
+    public function tearDown(): void
+    {
+        parent::tearDown();
 
-    m::close();
-  }
-
-  public function setUp() {
-    parent::setUp();
-
-    // Setup app
-    $this->app = m::mock('AppMock');
-    $this->app->shouldReceive('instance')->andReturn($this->app);
-
-    // Mock facades
-    \Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
-
-    // Instentiate class to test
-    $this->eloquent = m::mock('Eloquent');
-
-    $this->modelVocabulary = $this->mock('Trexology\Taxonomy\Models\Vocabulary');
-    $this->modelTerm = $this->mock('Trexology\Taxonomy\Models\Term');
-
-    $this->taxonomy = new Taxonomy($this->modelVocabulary, $this->modelTerm);
-  }
-
-  /**
-   * Create a mock
-   *
-   * @param class
-   * @param parentClass
-   *
-   * @return
-   */
-  public function mock($class, $parentClass = NULL)
-  {
-    if ($parentClass) {
-      $mock = m::mock($parentClass, $class);
-    } else {
-      $mock = m::mock($class);
+        m::close();
     }
-    $this->app->instance($class, $mock);
-    return $mock;
-  }
 
-  /**
-   * Test the creation of a vocabulary term
-   */
-  public function testTaxonomyCreateVocabulary() {
-    // Prepare data
-    $name = 'MOCK_NAME';
+    public function setUp(): void
+    {
+        parent::setUp();
 
-    $data = [
-      'name' => $name,
-    ];
+        // Setup app
+        $this->app = m::mock('AppMock');
+        $this->app->shouldReceive('instance')->andReturn($this->app);
 
-    // Mock
-    $mock_count = m::mock('mockCount');
-    $mock_count->shouldReceive('count')
-      ->with()
-      ->andReturn(FALSE);
+        // Mock facades
+        \Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
 
-    $this->modelVocabulary
-      ->shouldReceive('where')
-      ->with('name', $name)
-      ->andReturn($mock_count);
+        // Instentiate class to test
+        $this->eloquent = m::mock('Eloquent');
 
-    // Mock
-    $this->modelVocabulary
-      ->shouldReceive('create')
-      ->with($data)
-      ->andReturn(TRUE);
+        $this->modelVocabulary = $this->mock('Trexology\Taxonomy\Models\Vocabulary');
+        $this->modelTerm = $this->mock('Trexology\Taxonomy\Models\Term');
 
-    // Act
-    $result = $this->taxonomy->createVocabulary($name);
+        $this->taxonomy = new Taxonomy($this->modelVocabulary, $this->modelTerm);
+    }
 
-    // Assert
-    $this->assertTrue($result);
-  }
+    /**
+     * Create a mock
+     *
+     * @param class
+     * @param parentClass
+     * @param mixed $class
+     * @param null|mixed $parentClass
+     *
+     * @return
+     */
+    public function mock($class, $parentClass = null)
+    {
+        if ($parentClass) {
+            $mock = m::mock($parentClass, $class);
+        } else {
+            $mock = m::mock($class);
+        }
+        $this->app->instance($class, $mock);
 
-  /**
-   * Test the creation of an existing vocabulary name
-   */
-  public function testTaxonomyCreateVocabularyException() {
-    // Prepare data
-    $name = 'MOCK_NAME';
+        return $mock;
+    }
 
-    // Mock
-    $mock_count = m::mock('mockCount');
-    $mock_count->shouldReceive('count')
-      ->with()
-      ->andReturn(TRUE);
+    /**
+     * Test the creation of a vocabulary term
+     */
+    public function testTaxonomyCreateVocabulary()
+    {
+        // Prepare data
+        $name = 'MOCK_NAME';
 
-    $this->modelVocabulary
-      ->shouldReceive('where')
-      ->with('name', $name)
-      ->andReturn($mock_count);
+        $data = [
+            'name' => $name,
+        ];
 
-    $this->setExpectedException('\Trexology\Taxonomy\Exceptions\VocabularyExistsException');
+        // Mock
+        $mock_count = m::mock('mockCount');
+        $mock_count->shouldReceive('count')
+            ->with()
+            ->andReturn(false);
 
-    // Act
-    $result = $this->taxonomy->createVocabulary($name);
-  }
+        $this->modelVocabulary
+            ->shouldReceive('where')
+            ->with('name', $name)
+            ->andReturn($mock_count);
 
-  /**
-   * Test the retrieval of a Vocabulary by ID
-   */
-  public function testTaxonomyGetVocabulary() {
-    // Prepare data
-    $id = 1;
+        // Mock
+        $this->modelVocabulary
+            ->shouldReceive('create')
+            ->with($data)
+            ->andReturn(true);
 
-    $this->modelVocabulary
-      ->shouldReceive('find')
-      ->with($id)
-      ->andReturn(TRUE);
+        // Act
+        $result = $this->taxonomy->createVocabulary($name);
 
-    // Act
-    $result = $this->taxonomy->getVocabulary($id);
+        // Assert
+        $this->assertTrue($result);
+    }
 
-    // Assert
-    $this->assertTrue($result);
-  }
+    /**
+     * Test the creation of an existing vocabulary name
+     */
+    public function testTaxonomyCreateVocabularyException()
+    {
+        // Prepare data
+        $name = 'MOCK_NAME';
 
-  /**
-   * Test the retrieval of a Vocabulary by ID
-   */
-  public function testTaxonomyGetVocabularyByName() {
-    // Prepare data
-    $name = 'MOCK_NAME';
+        // Mock
+        $mock_count = m::mock('mockCount');
+        $mock_count->shouldReceive('count')
+            ->with()
+            ->andReturn(true);
 
-    // Mock
-    $mock_first = m::mock('mockFirst');
-    $mock_first->shouldReceive('first')
-      ->with()
-      ->andReturn(TRUE);
+        $this->modelVocabulary
+            ->shouldReceive('where')
+            ->with('name', $name)
+            ->andReturn($mock_count);
 
-    $this->modelVocabulary
-      ->shouldReceive('where')
-      ->with('name', $name)
-      ->andReturn($mock_first);
+        $this->expectException('\Trexology\Taxonomy\Exceptions\VocabularyExistsException');
 
-    // Act
-    $result = $this->taxonomy->getVocabularyByName($name);
+        // Act
+        $result = $this->taxonomy->createVocabulary($name);
+    }
 
-    // Assert
-    $this->assertTrue($result);
-  }
+    /**
+     * Test the retrieval of a Vocabulary by ID
+     */
+    public function testTaxonomyGetVocabulary()
+    {
+        // Prepare data
+        $id = 1;
 
-  public function testGetVocabularyByNameAsArrayNotFound() {
-    // Prepare data
-    $name = 'MOCK_NAME';
-    $result = null;
+        $this->modelVocabulary
+            ->shouldReceive('find')
+            ->with($id)
+            ->andReturn(true);
 
-    // Mock
-    $mockFirst = m::mock('first');
-    $mockFirst->shouldReceive('first')
-      ->andReturn($result);
+        // Act
+        $result = $this->taxonomy->getVocabulary($id);
 
-    $this->modelVocabulary
-      ->shouldReceive('where')
-      ->with('name', $name)
-      ->andReturn($mockFirst);
+        // Assert
+        $this->assertTrue($result);
+    }
 
-    // Act
-    $result = $this->taxonomy->getVocabularyByNameAsArray($name);
+    /**
+     * Test the retrieval of a Vocabulary by ID
+     */
+    public function testTaxonomyGetVocabularyByName()
+    {
+        // Prepare data
+        $name = 'MOCK_NAME';
 
-    // Assert
-    $this->assertEmpty($result);
-  }
+        // Mock
+        $mock_first = m::mock('mockFirst');
+        $mock_first->shouldReceive('first')
+            ->with()
+            ->andReturn(true);
 
-  public function testGetVocabularyByNameAsArrayFound() {
-    // Prepare data
-    $name = 'MOCK_NAME';
-    $vocabulary = new \StdClass();
+        $this->modelVocabulary
+            ->shouldReceive('where')
+            ->with('name', $name)
+            ->andReturn($mock_first);
 
-    // Mock
-    $mockToArray = m::mock('toArray');
-    $mockToArray->shouldReceive('toArray')
-      ->andReturn(true);
+        // Act
+        $result = $this->taxonomy->getVocabularyByName($name);
 
-    $mockList = m::mock('lists');
-    $mockList->shouldReceive('lists')
-      ->with('name', 'id')
-      ->andReturn($mockToArray);
+        // Assert
+        $this->assertTrue($result);
+    }
 
-    $vocabulary->terms = $mockList;
-    $mockFirst = m::mock('first');
-    $mockFirst->shouldReceive('first')
-      ->andReturn($vocabulary);
+    public function testGetVocabularyByNameAsArrayNotFound()
+    {
+        // Prepare data
+        $name = 'MOCK_NAME';
+        $result = null;
 
-    $this->modelVocabulary->shouldReceive('where')
-      ->with('name', $name)
-      ->andReturn($mockFirst);
+        // Mock
+        $mockFirst = m::mock('first');
+        $mockFirst->shouldReceive('first')
+            ->andReturn($result);
 
-    // Act
-    $result = $this->taxonomy->getVocabularyByNameAsArray($name);
+        $this->modelVocabulary
+            ->shouldReceive('where')
+            ->with('name', $name)
+            ->andReturn($mockFirst);
 
-    // Assert
-    $this->assertTrue($result);
-  }
+        // Act
+        $result = $this->taxonomy->getVocabularyByNameAsArray($name);
 
-  /**
-   * Test the creation of a vocabulary term
-   */
-  public function testTaxonomyDeleteVocabulary() {
-    // Prepare data
-    $id = 1;
+        // Assert
+        $this->assertEmpty($result);
+    }
 
-    // Mock
-    $mock_delete = m::mock('mockDelete');
-    $mock_delete->shouldReceive('delete')
-      ->with()
-      ->andReturn(TRUE);
+    public function testGetVocabularyByNameAsArrayFound()
+    {
+        // Prepare data
+        $name = 'MOCK_NAME';
+        $vocabulary = new \StdClass();
 
-    $this->modelVocabulary
-      ->shouldReceive('findOrFail')
-      ->with($id)
-      ->andReturn($mock_delete);
+        // Mock
+        $mockToArray = m::mock('toArray');
+        $mockToArray->shouldReceive('toArray')
+            ->andReturn(true);
 
-    // Act
-    $result = $this->taxonomy->deleteVocabulary($id);
+        $mockList = m::mock('lists');
+        $mockList->shouldReceive('lists')
+            ->with('name', 'id')
+            ->andReturn($mockToArray);
 
-    // Assert
-    $this->assertTrue($result);
-  }
+        $vocabulary->terms = $mockList;
+        $mockFirst = m::mock('first');
+        $mockFirst->shouldReceive('first')
+            ->andReturn($vocabulary);
 
-  /**
-   * Test the creation of a vocabulary term
-   */
-  public function testTaxonomyDeleteVocabularyByName() {
-    // Prepare data
-    $name = 'MOCK_NAME';
+        $this->modelVocabulary->shouldReceive('where')
+            ->with('name', $name)
+            ->andReturn($mockFirst);
 
-    // Mock
-    $mock_delete = m::mock('mockDelete');
-    $mock_delete->shouldReceive('delete')
-      ->with()
-      ->andReturn(TRUE);
+        // Act
+        $result = $this->taxonomy->getVocabularyByNameAsArray($name);
 
-    $mock_first = m::mock('mockFirst');
-    $mock_first->shouldReceive('first')
-      ->with()
-      ->andReturn($mock_delete);
+        // Assert
+        $this->assertTrue($result);
+    }
 
-    $this->modelVocabulary
-      ->shouldReceive('where')
-      ->with('name', $name)
-      ->andReturn($mock_first);
+    /**
+     * Test the creation of a vocabulary term
+     */
+    public function testTaxonomyDeleteVocabulary()
+    {
+        // Prepare data
+        $id = 1;
 
-    // Act
-    $result = $this->taxonomy->deleteVocabularyByName($name);
+        // Mock
+        $mock_delete = m::mock('mockDelete');
+        $mock_delete->shouldReceive('delete')
+            ->with()
+            ->andReturn(true);
 
-    // Assert
-    $this->assertTrue($result);
-  }
+        $this->modelVocabulary
+            ->shouldReceive('findOrFail')
+            ->with($id)
+            ->andReturn($mock_delete);
 
-  /**
-   * Test the creation of a vocabulary term
-   */
-  public function testTaxonomyDeleteVocabularyByNameFalse() {
-    // Prepare data
-    $name = 'MOCK_NAME';
+        // Act
+        $result = $this->taxonomy->deleteVocabulary($id);
 
-    // Mock
-    $mock_first = m::mock('mockFirst');
-    $mock_first->shouldReceive('first')
-      ->with()
-      ->andReturn(NULL);
+        // Assert
+        $this->assertTrue($result);
+    }
 
-    $this->modelVocabulary
-      ->shouldReceive('where')
-      ->with('name', $name)
-      ->andReturn($mock_first);
+    /**
+     * Test the creation of a vocabulary term
+     */
+    public function testTaxonomyDeleteVocabularyByName()
+    {
+        // Prepare data
+        $name = 'MOCK_NAME';
 
-    // Act
-    $result = $this->taxonomy->deleteVocabularyByName($name);
+        // Mock
+        $mock_delete = m::mock('mockDelete');
+        $mock_delete->shouldReceive('delete')
+            ->with()
+            ->andReturn(true);
 
-    // Assert
-    $this->assertFalse($result);
-  }
+        $mock_first = m::mock('mockFirst');
+        $mock_first->shouldReceive('first')
+            ->with()
+            ->andReturn($mock_delete);
 
+        $this->modelVocabulary
+            ->shouldReceive('where')
+            ->with('name', $name)
+            ->andReturn($mock_first);
 
-  public function testTaxonomyCreateTerm() {
-    // Prepare data
-    $vid = 1;
-    $name = 'MOCK_NAME';
-    $parent = 0;
-    $weight = 0;
+        // Act
+        $result = $this->taxonomy->deleteVocabularyByName($name);
 
-    $term = [
-      'name' => $name,
-      'vocabulary_id' => $vid,
-      'parent' => $parent,
-      'weight' => $weight,
-    ];
+        // Assert
+        $this->assertTrue($result);
+    }
 
-    // Mock
-    $mock_create = $this->modelTerm->shouldReceive('create')
-      ->with($term)
-      ->andReturn(TRUE);
+    /**
+     * Test the creation of a vocabulary term
+     */
+    public function testTaxonomyDeleteVocabularyByNameFalse()
+    {
+        // Prepare data
+        $name = 'MOCK_NAME';
 
-    $this->modelVocabulary
-      ->shouldReceive('findOrFail')
-      ->with($vid)
-      ->andReturn($mock_create);
+        // Mock
+        $mock_first = m::mock('mockFirst');
+        $mock_first->shouldReceive('first')
+            ->with()
+            ->andReturn(null);
 
-    // Act
-    $result = $this->taxonomy->createTerm($vid, $name, $parent, $weight);
+        $this->modelVocabulary
+            ->shouldReceive('where')
+            ->with('name', $name)
+            ->andReturn($mock_first);
 
-    // Assert
-    $this->assertTrue($result);
-  }
+        // Act
+        $result = $this->taxonomy->deleteVocabularyByName($name);
 
+        // Assert
+        $this->assertFalse($result);
+    }
+
+    public function testTaxonomyCreateTerm()
+    {
+        // Prepare data
+        $vid = 1;
+        $name = 'MOCK_NAME';
+        $parent = 0;
+        $weight = 0;
+
+        $term = [
+            'name' => $name,
+            'vocabulary_id' => $vid,
+            'parent' => $parent,
+            'weight' => $weight,
+        ];
+
+        // Mock
+        $mock_create = $this->modelTerm->shouldReceive('create')
+            ->with($term)
+            ->andReturn(true);
+
+        $this->modelVocabulary
+            ->shouldReceive('findOrFail')
+            ->with($vid)
+            ->andReturn($mock_create);
+
+        // Act
+        $result = $this->taxonomy->createTerm($vid, $name, $parent, $weight);
+
+        // Assert
+        $this->assertTrue($result);
+    }
 }
